@@ -88,6 +88,31 @@ section {
     transition: ease 0.3s all;
 }
 
+/* Media query for screens 414px or smaller */
+@media only screen and (max-width: 414px) {
+    .navbar__menu ul {
+        display: flex;        /* Use flexbox to keep items in a single row */
+        flex-wrap: nowrap;    /* Prevent wrapping onto multiple lines */
+        justify-content: space-around;  /* Spread the items evenly */
+        padding: 0;
+    }
+
+    .navbar__menu li {
+        display: inline-block;  /* Ensure nav items remain inline */
+        margin: 0 5px;          /* Adjust spacing between items */
+    }
+
+    .navbar__menu .menu__link {
+        padding: 0.5em;  /* Reduce padding for smaller screens */
+        font-size: 0.9em;  /* Slightly reduce the font size if needed */
+    }
+
+    .page__header {
+        padding: 0.5em;  /* Reduce the header padding to fit on small screens */
+    }
+}
+
+
 /* Header Styles */
 .page__header {
     background: #fff;

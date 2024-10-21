@@ -14,40 +14,67 @@
 */
 
 /**
- * Comments should be present at the beginning of each procedure and class.
- * Great to have comments before crucial code sections within the procedure.
-*/
-
-/**
  * Define Global Variables
  * 
-*/
-
+ */
+const sections = document.querySelectorAll("section");  // All sections on the page
+const navbarList = document.getElementById("navbar__list");  // Navigation list container
 
 /**
  * End Global Variables
  * Start Helper Functions
  * 
-*/
+ */
 
+/**
+ * Remove the active state from all sections and their corresponding nav links.
+ */
+const removeActiveState = () => {
+    sections.forEach(section => {
+        section.classList.remove('your-active-class');  // Remove active class from section
+    });
 
+    const navLinks = document.querySelectorAll('.menu__link');
+    navLinks.forEach(link => {
+        link.classList.remove('active');  // Remove active class from nav links
+    });
+};
 
+/**
+ * Make the currently visible section and its nav link active based on scroll position.
+ */
+const makeActive = () => {
+    const VALUE = 150;  // Threshold for activating the section
 
+    sections.forEach(section => {
+        const box = section.getBoundingClientRect();
+
+        if (box.top <= VALUE && box.bottom >= VALUE) {
+            // Apply active state to the section
+            section.classList.add('your-active-class');
+
+            // Apply active state to the corresponding nav link
+            const activeLink = document.querySelector(`a[href="#${section.id}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+        }
+    });
+};
 
 /**
  * End Helper Functions
  * Begin Main Functions
  * 
-*/
+ */
 
 // build the nav
 
-// Wait for the DOM content to be fully loaded before executing the script
-document.addEventListener("DOMContentLoaded", function() {
-    const sections = document.querySelectorAll("section");
-    const navbarList = document.getElementById("navbar__list");
-
-    // Create navigation links
+/**
+ * Wait for the DOM content to be fully loaded before executing the script.
+ */
+document.addEventListener("DOMContentLoaded", function () {
+    // Create navigation links dynamically
     sections.forEach(section => {
         const sectionId = section.getAttribute("id");
         const sectionTitle = section.querySelector("h2").textContent;
@@ -55,60 +82,30 @@ document.addEventListener("DOMContentLoaded", function() {
         const listItem = document.createElement("li");
         const link = document.createElement("a");
 
-        link.href = `#${sectionId}`;
-        link.textContent = sectionTitle;
+        link.href = `#${sectionId}`;  // Set href to section id
+        link.textContent = sectionTitle;  // Set text as section title
         link.classList.add('menu__link');
 
         listItem.appendChild(link);
         navbarList.appendChild(listItem);
 
         // Add event listener for smooth scrolling
-        link.addEventListener('click', function(event) {
-            event.preventDefault();  // Stop default jump behavior
+        link.addEventListener('click', function (event) {
+            event.preventDefault();  // Prevent default jump behavior
             document.getElementById(sectionId).scrollIntoView({
-                behavior: 'smooth'    // Smooth scroll to section
+                behavior: 'smooth'    // Smooth scroll to the clicked section
             });
         });
     });
 
-    // Function to remove active class from all nav links
-    const unhighlightNavLinks = () => {
-        const navLinks = document.querySelectorAll('.menu__link');
-        navLinks.forEach(link => {
-            link.classList.remove('active');  // Remove 'active' class from all nav links
-        });
-    };
-
-    // Highlight the section in view and the corresponding nav link
-    window.addEventListener('scroll', function() {
-        let currentActive = '';
-
-        sections.forEach(section => {
-            const bounding = section.getBoundingClientRect();
-            if (bounding.top >= 0 && bounding.top < window.innerHeight / 2) {
-                // Set the active class on the section
-                section.classList.add('your-active-class');
-                currentActive = section.getAttribute("id");
-            } else {
-                section.classList.remove('your-active-class');
-            }
-        });
-
-        // Unhighlight all nav links when scrolling
-        unhighlightNavLinks();
-
-        // Update the active state of the navigation links
-        const navLinks = document.querySelectorAll('.menu__link');
-        navLinks.forEach(link => {
-            if (link.getAttribute("href") === `#${currentActive}`) {
-                link.classList.add('active');  // Add 'active' class to the nav link
-            }
-        });
+    // Scroll event listener
+    window.addEventListener('scroll', function () {
+        removeActiveState();  // First, remove active state from all sections and nav links
+        makeActive();         // Then, make the section in view active
     });
 });
 
 // Add class 'active' to section when near top of viewport
-
 
 // Scroll to anchor ID using scrollTO event
 
@@ -117,12 +114,11 @@ document.addEventListener("DOMContentLoaded", function() {
  * End Main Functions
  * Begin Events
  * 
-*/
+ */
 
 // Build menu 
 
 // Scroll to section on link click
 
 // Set sections as active
-
 
