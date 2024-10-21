@@ -88,6 +88,13 @@ section {
     transition: ease 0.3s all;
 }
 
+/* Style for active navigation link */
+.menu__link.active {
+    background-color: #333;  /* Dark background for active link */
+    color: #fff;             /* Change text color for active link */
+}
+
+
 /* Media query for screens 414px or smaller */
 @media only screen and (max-width: 414px) {
     .navbar__menu ul {
@@ -232,6 +239,8 @@ section.your-active-class .landing__container::after {
     opacity: 1;
     animation: rotate 5s linear 0s infinite forwards reverse;
 }
+
+
 
 /* Section Active Styles Keyframe Animations */
 @keyframes rotate {
